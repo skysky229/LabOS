@@ -74,7 +74,8 @@ void * loader(void * arg) {
 		struct pcb_t * proc = de_queue(&in_queue);
 		/* Loader sleeps until the next process available */
 		int wastetime = proc->arrival_time - timestamp;
-		usleep(wastetime * TIME_UNIT);
+		usleep((wastetime+1) * TIME_UNIT);
+		printf("Loader test: %d %d \n", timestamp, wastetime);
 		/* Update timestamp and put the new process to ready queue */
 		timestamp += wastetime;
 		en_queue(&ready_queue, proc);

@@ -26,7 +26,9 @@ struct pcb_t * de_queue(struct pqueue_t * q) {
 	pthread_mutex_lock(&q->lock);
 	if (!empty(q)){
 		proc = q->head->data;
-		q->head = q->head->next;
+		struct qitem_t* temp = q->head->next;
+		free(q->head);
+		q->head = temp;	
 	}
 	//printf("de_queue test: %d %d \n", proc->arrival_time, proc->burst_time);
 	pthread_mutex_unlock(&q->lock);
