@@ -17,9 +17,7 @@ static int timeslot; 	// The maximum amount of time a process is allowed
 
 // Emulate the CPU
 void * cpu(void * arg) {
-	printf("Hi \n");
 	int timestamp = 0;
-	printf("inputtt: %d \n", timestamp);
 	/* Keep running until we have loaded all process from the input file
 	 * and there is no process in ready queue */
 	while (!load_done || !empty(&ready_queue)) {
@@ -43,9 +41,7 @@ void * cpu(void * arg) {
 			// TODO: Calculate exec_time from process's PCB
 			
 			// YOUR CODE HERE
-			exec_time = proc->burst_time - timeslot;
-			if (exec_time < 0) 
-				exec_time = proc->burst_time;
+			exec_time = (proc->burst_time < timeslot) ? proc->burst_time : timeslot;
 			
 			/* Emulate the execution of the process by using
 			 * 'usleep()' function */
@@ -72,7 +68,6 @@ void * cpu(void * arg) {
 
 // Emulate the loader
 void * loader(void * arg) {
-	printf("Hi \n");
 	int timestamp = 0;
 	/* Keep loading new process until the in_queue is empty*/
 	while (!empty(&in_queue)) {

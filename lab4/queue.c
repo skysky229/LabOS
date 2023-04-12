@@ -39,7 +39,7 @@ void en_queue(struct pqueue_t * q, struct pcb_t * proc) {
 	// Remember to use 'lock' to avoid race condition
 	// YOUR CODE HERE
 	pthread_mutex_lock(&q->lock);
-	struct qitem_t * newItem;
+	struct qitem_t * newItem = (struct qitem_t *)malloc(sizeof(struct qitem_t));
 	newItem->data = proc;
 	if (!empty(q))
 		q->tail->next = newItem;
